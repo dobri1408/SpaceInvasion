@@ -17,14 +17,258 @@
 
 //////////////////////////////////////////////////////////////////////
 /// This class is used to test that the memory leak checks work as expected even when using a GUI
-class SomeClass {
-public:
-    explicit SomeClass(int) {}
+class Entity
+{
+    public:
+   
+    Entity(float x, float y) {
+    _startingPosition.x = x;
+    _startingPosition.y = y;
+    _health = 1;
+    _movementSpeed = 0.2;
+    _sprite.setPosition(_startingPosition);
+    }
+    ~Entity()
+    {
+        cout << "enitity removed"
+    }
+
+
+        //GETTERS
+        int getHealth()
+{
+    return _health;
+}
+
+float getMovementSpeed()
+{
+    return _movementSpeed;
+}
+
+sf::Sprite &getSprite()
+{
+    return _sprite;
+}
+
+sf::Vector2f getStartingPosition()
+{
+    return _startingPosition;
+}
+
+
+        //SETTERS
+      void setTexture(std::string name)
+{
+    if(!_texture.loadFromFile(name))
+    {
+        std::cerr << "ERROR, CANNOT LOAD TEXTURE" << std::endl;
+        EXIT_FAILURE;
+    }
+    else
+    {
+        _sprite.setTexture(_texture);
+    }
+}
+
+
+void setHealth(int value)
+{
+    _health = value;
+}
+
+
+
+        //FUNCTIONS
+       void movement(sf::Time frameTime, short int direction)
+{
+    switch(direction)
+    {
+        case 1: //MOVE LEFT
+           _sprite.move(-1 * _movementSpeed * frameTime.asMilliseconds(), 0);
+           break;
+        case 2: //MOVE RIGHT
+           _sprite.move(_movementSpeed * frameTime.asMilliseconds(), 0);
+           break;
+        case 3: // MOVE UP
+           _sprite.move(0, -1 * _movementSpeed * frameTime.asMilliseconds());
+           break;
+        case 4: //MOVE DOWN
+           _sprite.move(0, _movementSpeed * frameTime.asMilliseconds());
+           break;
+    }
+}
+bool isDead()
+{
+    if(_health <= 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void hpDown()
+{
+    _health = _health - 1;
+    std::cout << "HP DOWN = " << _health << std::endl;
+}
+ friend ostream & operator << (ostream & out , const Entity & e)
+        {
+            out << e._startingPosition << "/" << e._texture<< " " <<e.__sprite << " "<<e._movementSpeed<< " "<<e._health ;
+            return out;
+        }
+};
+    protected:
+        sf::Vector2f _startingPosition;
+        sf::Texture _texture;
+        sf::Sprite _sprite;
+        float _movementSpeed;
+        int _health;
+
+    private:
 };
 
-SomeClass *getC() {
-    return new SomeClass{2};
+
+class Player : public Entity
+{
+    public:
+       Player(float x, float y) : Entity(x, y, 3, 0.5f)
+{
+    setTexture("player.png");
 }
+
+~Player()
+{
+
+}
+
+class Bullet
+{
+    public:
+
+
+Bullet()
+{
+    _rect.setSize(sf::Vector2f(3,5));
+    _movementSpeed = 0.5f;
+    _color = sf::Color::White;
+    _direction = 1;
+}
+
+Bullet(float x, float y, short int direction, sf::Color color)
+{
+    _rect.setSize(sf::Vector2f(3,5));
+    _rect.setPosition(x, y);
+    _movementSpeed = 0.5f;
+    _color = color;
+    _direction = direction;
+}
+
+Bullet(float x, float y, short int direction, sf::Color color, float movementSpeed)
+{
+    _rect.setSize(sf::Vector2f(3,5));
+    _rect.setPosition(x, y);
+    _movementSpeed = movementSpeed;
+    _color = color;
+    _direction = direction;
+}
+
+~Bullet()
+{
+
+}
+
+//GETTERS
+
+float getMovementSpeed()
+{
+    return _movementSpeed;
+}
+
+short int getDirection()
+{
+    return _direction;
+}
+
+sf::RectangleShape getRect()
+{
+    return _rect;
+}
+
+//FUNCTIONS
+
+void movement(sf::Time frameTime)
+{
+    switch(_direction)
+    {
+        case 1: //MOVE UP
+           _rect.move(0, -1 * _movementSpeed * frameTime.asMilliseconds());
+           break;
+        case 2: //MOVE DOWN
+           _rect.move(0, _movementSpeed * frameTime.asMilliseconds());
+           break;
+    }
+}
+ friend ostream & operator << (ostream & out , const Entity & e)
+        {
+            out << e._movementSpeed << "/" << e._rect<< " " <<e._color << " "<<e._direction<< " "<<_health ;
+            return out;
+        }
+};
+
+    protected:
+        float _movementSpeed;
+        sf::RectangleShape _rect;
+        sf::Color _color;
+        short int _direction; // 1-UP 2-DOWN
+
+
+    private:
+};
+
+//FUNCTIONS
+
+
+
+void keyboardControl(sf::Time frameTime, BulletManager &bulletmanager, sf::Time shootingTimer, TimeManager &timeManager, AudioManager &audioManager)
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        if(getSprite().getPosition().x > 0)
+        {
+            movement(frameTime, 1);
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        if(getSprite().getPosition().x < 760)
+        {
+            movement(frameTime, 2);
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+
+        if(shootingTimer.asSeconds() > 0.3f)
+        {
+            audioManager.playShoot();
+            PlayerBullet temp(_sprite.getPosition().x + 16, _sprite.getPosition().y + 2);
+            bulletmanager.addPlayerBullet(temp);
+            timeManager.restartShootClock();
+        }
+    }
+}
+
+
+    protected:
+
+    private:
+};
+
 //////////////////////////////////////////////////////////////////////
 
 

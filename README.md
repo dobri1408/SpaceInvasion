@@ -1,6 +1,11 @@
 # Nu primesc notă pentru că nu am pus titlu și descriere
 
+### DESPRE PROIECT
+
+SpaceInvasion este un joc clasic, in care o nava cu oameni, calatoresc in spatiu, insa vin inamici extraterestri din partea de sus a ecranului si coboara pana jos. Nava poate sa ii omoare pe inamici folosind gloantele.
+
 ### Important!
+
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
 Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
 în care oferă funcționalități ajutătoare și doar dacă are sens.
@@ -8,6 +13,7 @@ Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar p
 O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
 
 ### Cerințe modele de limbaj la nivel de semestru
+
 - [ ] minim o funcționalitate majoritar doar cu LLM
 - [ ] minim 2-3 funcționalități ~50% voi, ~50% LLM-ul
 - [ ] minim 2-3 funcționalități suficient de complicate pe care un LLM nu le poate implementa
@@ -20,11 +26,12 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 ## Tema 1
 
 #### Cerințe
+
 - [ ] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi
 - [ ] constructori de inițializare
 - [ ] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
-<!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
-<!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
+  <!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
+  <!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
 - [ ] `operator<<` pentru toate clasele pentru afișare (std::ostream)
 - [ ] cât mai multe `const` (unde este cazul)
 - [ ] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
@@ -38,6 +45,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 ## Tema 2
 
 #### Cerințe
+
 - [ ] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
 - [ ] moșteniri:
   - minim o clasă de bază și **3 clase derivate**
@@ -63,10 +71,11 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 ## Tema 3
 
 #### Cerințe
+
 - [ ] 2 șabloane de proiectare (design patterns)
 - [ ] o clasă șablon cu sens; minim **2 instanțieri**
   - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
-<!-- - [ ] o specializare pe funcție/clasă șablon -->
+  <!-- - [ ] o specializare pe funcție/clasă șablon -->
 - [ ] tag de `git`: de exemplu `v0.3` sau `v1.0`
 
 ## Resurse
