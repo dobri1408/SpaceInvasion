@@ -307,6 +307,17 @@ int main() {
     std::cin>>x>>y >> gx>>gy;
     Bullet b(gx,gy,0,"red",0);
     Player p(x,y);
+    b.getRect();
+    b.getDirection();
+    b.getMovementSpeed();
+    p.getHealth();
+    p.getMovementSpeed();
+    p.getSprite();
+    p.getStartingPosition();
+    p.hpDown();
+    p.isDead();
+    p.movement();
+    p.setHealth(1);
     std::cout<<p<< " "<< b;
     while(window.isOpen()) {
         bool shouldExit = false;
