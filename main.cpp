@@ -28,6 +28,14 @@ class Entity
     _movementSpeed = 0.2;
     _sprite.setPosition(_startingPosition);
     }
+    Entity(float x, float y, int health, float movementSpeed)
+    {
+        _startingPosition.x = x;
+        _startingPosition.y = y;
+        _health = health;
+        _movementSpeed = movementSpeed;
+        _sprite.setPosition(_startingPosition);
+    }
     ~Entity()
     {
         std::cout << "enitity removed";
@@ -116,7 +124,7 @@ void hpDown()
 }
 
 
-friend ostream & operator << (ostream & out , const Entity & e) 
+friend std::ostream & operator << (std::ostream & out , const Entity & e);
     protected:
         sf::Vector2f _startingPosition;
         sf::Texture _texture;
@@ -209,7 +217,7 @@ void movement(sf::Time frameTime)
            break;
     }
 } 
-friend ostream & operator << (ostream & out , const Bullet & e)
+friend std::ostream & operator << (std::ostream & out , const Bullet & e);
 
     protected:
         float _movementSpeed;
@@ -221,8 +229,8 @@ friend ostream & operator << (ostream & out , const Bullet & e)
     private:
 };
 
-ostream & operator << (ostream & out , const Bullet & e){}
-ostream & operator << (ostream & out , const Entity & e){}
+std::ostream & operator << (std::ostream & out , const Bullet & e){}
+std::ostream & operator << (std::ostream & out , const Entity & e){}
 //////////////////////////////////////////////////////////////////////
 
 
