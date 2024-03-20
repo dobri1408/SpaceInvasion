@@ -20,7 +20,7 @@
 class Entity
 {
     public:
-   
+
     Entity(float x, float y) {
     _startingPosition.x = x;
     _startingPosition.y = y;
@@ -180,6 +180,13 @@ Bullet(float x, float y, short int direction, sf::Color color, float movementSpe
     _color = color;
     _direction = direction;
 }
+Bullet(Bullet &t){
+    _rect.setSize(sf::Vector2f(t.getRect().getOrigin()));
+    _rect.setPosition(x, y);
+    _movementSpeed = movementSpeed;
+    _color = color;
+    _direction = direction;
+}
 
 ~Bullet()
 {
@@ -216,7 +223,7 @@ void movement(sf::Time frameTime)
            _rect.move(0, _movementSpeed * frameTime.asMilliseconds());
            break;
     }
-} 
+}
 friend std::ostream & operator << (std::ostream & out , const Bullet & e);
 
     protected:
@@ -229,9 +236,15 @@ friend std::ostream & operator << (std::ostream & out , const Bullet & e);
     private:
 };
 
-std::ostream & operator << (std::ostream & out , const Bullet & e){}
-std::ostream & operator << (std::ostream & out , const Entity & e){}
-//////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream & out , const Bullet & e){
+    out<<e._movementSpeed  << " " << e._direction<<" ";
+    return out;
+}
+std::ostream & operator << (std::ostream & out , const Entity & e){
+    out<<e._movementSpeed <<" " <<e._health<<" ";
+    return out;
+}
+////////////////////////////////////////////////////////////////////////
 
 
 int main() {
@@ -290,7 +303,11 @@ int main() {
     window.setVerticalSyncEnabled(true);                            ///
     /// window.setFramerateLimit(60);                                       ///
     ///////////////////////////////////////////////////////////////////////////
-
+    float x,y,gx,gy;
+    std::cin>>x>>y >> gx>>gy;
+    Bullet b(gx,gy,0,"red",0);
+    Player p(x,y);
+    std::cout<<p<< " "<< b;
     while(window.isOpen()) {
         bool shouldExit = false;
         sf::Event e{};
