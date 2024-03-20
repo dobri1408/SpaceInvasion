@@ -30,7 +30,7 @@ class Entity
     }
     ~Entity()
     {
-        cout << "enitity removed"
+        std::cout << "enitity removed";
     }
 
 
@@ -114,12 +114,9 @@ void hpDown()
     _health = _health - 1;
     std::cout << "HP DOWN = " << _health << std::endl;
 }
- friend ostream & operator << (ostream & out , const Entity & e)
-        {
-            out << e._startingPosition << "/" << e._texture<< " " <<e.__sprite << " "<<e._movementSpeed<< " "<<e._health ;
-            return out;
-        }
-};
+
+
+friend ostream & operator << (ostream & out , const Entity & e) 
     protected:
         sf::Vector2f _startingPosition;
         sf::Texture _texture;
@@ -143,6 +140,7 @@ class Player : public Entity
 {
 
 }
+};
 
 class Bullet
 {
@@ -210,13 +208,8 @@ void movement(sf::Time frameTime)
            _rect.move(0, _movementSpeed * frameTime.asMilliseconds());
            break;
     }
-}
- friend ostream & operator << (ostream & out , const Entity & e)
-        {
-            out << e._movementSpeed << "/" << e._rect<< " " <<e._color << " "<<e._direction<< " "<<_health ;
-            return out;
-        }
-};
+} 
+friend ostream & operator << (ostream & out , const Bullet & e)
 
     protected:
         float _movementSpeed;
@@ -228,47 +221,8 @@ void movement(sf::Time frameTime)
     private:
 };
 
-//FUNCTIONS
-
-
-
-void keyboardControl(sf::Time frameTime, BulletManager &bulletmanager, sf::Time shootingTimer, TimeManager &timeManager, AudioManager &audioManager)
-{
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        if(getSprite().getPosition().x > 0)
-        {
-            movement(frameTime, 1);
-        }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        if(getSprite().getPosition().x < 760)
-        {
-            movement(frameTime, 2);
-        }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-
-        if(shootingTimer.asSeconds() > 0.3f)
-        {
-            audioManager.playShoot();
-            PlayerBullet temp(_sprite.getPosition().x + 16, _sprite.getPosition().y + 2);
-            bulletmanager.addPlayerBullet(temp);
-            timeManager.restartShootClock();
-        }
-    }
-}
-
-
-    protected:
-
-    private:
-};
-
+ostream & operator << (ostream & out , const Bullet & e){}
+ostream & operator << (ostream & out , const Entity & e){}
 //////////////////////////////////////////////////////////////////////
 
 
@@ -278,10 +232,7 @@ int main() {
     init_threads();                                                       //
     ////////////////////////////////////////////////////////////////////////
     ///
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
+   
     /////////////////////////////////////////////////////////////////////////
     /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
     /// dați exemple de date de intrare folosind fișierul tastatura.txt
@@ -302,17 +253,7 @@ int main() {
     /// program care merg (și să le evitați pe cele care nu merg).
     ///
     /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
+    
     ///////////////////////////////////////////////////////////////////////////
     /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
     /// alt fișier propriu cu ce alt nume doriți.
@@ -328,9 +269,6 @@ int main() {
     helper.help();
     ///////////////////////////////////////////////////////////////////////////
 
-    SomeClass *c = getC();
-    std::cout << c << "\n";
-    delete c;
 
     sf::RenderWindow window;
     ///////////////////////////////////////////////////////////////////////////
